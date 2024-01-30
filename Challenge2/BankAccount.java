@@ -1,65 +1,36 @@
 package Day7.Challenge2;
 
+import Day7.Challenge2.TransactionType;
+
 import java.util.ArrayList;
 
-public abstract class BankAccount implements Transactable{
-    private String accountNumber;
-    private double balance;
-    private ArrayList<Transaction> transactionsHistory=new ArrayList<>();
+public abstract class BankAccount implements Day7.challenge2.Transactable {
 
-   public BankAccount(String accountNumber, double balance){
-        this.accountNumber=accountNumber;
-        this.balance=balance;
+    public String numberAccount;
+    public double balance;
+
+    public ArrayList<TransactionType> transactionTypes;
+    public BankAccount(String numberAccount, double balance) {
+        this.numberAccount = numberAccount;
+        this.balance = balance;
     }
-   public void transfertTransaction(BankAccount bank){
-       System.out.println("please enter your destinat accoundert");
 
-   }
-    @Override
-    public void deposit(double amount)
-    {
-        if(amount>0) {
-            balance += amount;
-            System.out.println("Deposited $ "+amount+ " ||"+" new balance $" + balance);
-            transactionsHistory.add(new Transaction("deposit",amount));
-        }
+
+    public void deposit(double amount) throws Exception {
+        if (amount>0) balance+=amount;
         else{
-            System.out.println("Invalid amount");
+            System.err.println("Error");
+            throw new Exception("Invalide ");
         }
 
     }
-    public double getBalance(){
-        return balance;
-    }
-    public void trackTransaction(){
-        System.out.println("history of your account : ");
-        for(Transaction transaction :transactionsHistory){
-            System.out.println(transaction);
-            transaction.toString();
-        }
 
-    }
-    @Override
-    public void withdrow(double amount)
-    {
-        if(amount<=balance){
-        balance-=amount;
-            System.out.println("Withrow $ "+amount+ " || "+"new balance $" + balance);
-            transactionsHistory.add(new Transaction("withdrow",amount));
-
+    public void withdraw(double amount) {
+        if (amount <= balance) {
+            balance -= amount;
+        } else {
+            System.err.println("Insufficient funds");
         }
     }
-
-
-public static void main(String[]args){
-    /*BankAccount bankAccount=new BankAccount("#123456",10000);
-    bankAccount.deposit(500);
-    bankAccount.withdraw(1000);
-    System.out.println("current balance: $"+bankAccount.getBalance());*/
-
-
-}
-
-
 
 }

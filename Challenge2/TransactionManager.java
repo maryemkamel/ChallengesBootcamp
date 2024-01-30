@@ -1,49 +1,65 @@
 package Day7.Challenge2;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class TransactionManager {
+    public ArrayList<BankAccount> bankAccounts = new ArrayList<>();
+    public ArrayList<Transaction> transactions = new ArrayList<>();
 
-    private List<BankAccount> accounts;
 
-    public TransactionManager() {
-        this.accounts = new ArrayList<>();
-    }
-
-    public void addAccount(BankAccount account) {
-        accounts.add(account);
-    }
-
-    public void performTransactions() {
-
-        for (BankAccount account : accounts) {
-            account.deposit(1000.0);
-            account.withdrow(500.0);
+    public void displayInfoHistory() {
+        for (Transaction transaction : transactions){
+            System.out.println(transaction);
         }
     }
 
-    public void displayAllTransactionHistories() {
-        System.out.println("Transaction Histories for All Accounts:");
-        for (BankAccount account : accounts) {
-            System.out.println("Account Type: " + account.getClass().getSimpleName());
-            account.trackTransaction();
-            System.out.println("---------------------------------------");
+    public void addAcount(BankAccount account){
+        bankAccounts.add(account);
+    }
+    public void diposit(BankAccount account, double amount) throws Exception {
+        account.deposit(amount);
+        transactions.add(new Transaction("diposit",amount));
+
+    }
+    public void withdrawal(BankAccount account, double amount){
+        account.withdraw(amount);
+        transactions.add(new Transaction("withdrawal",amount));
+    }
+    public void displayInfo(BankAccount account){
+            System.out.println(account.numberAccount + "   " + account.balance);
+    }
+
+    public void transfert(BankAccount bankAccountDepited, BankAccount bankAccountCredited, Double amount) {
+        try {
+            if (!bankAccounts.contains(bankAccountDepited)) {
+                throw new ClassNotFoundException("hana");
+            } else {
+                bankAccountDepited.balance -= amount;
+            }
+
+            if (!bankAccounts.contains(bankAccountCredited)) {
+                throw new ClassNotFoundException("hana");
+            } else {
+                bankAccountCredited.balance += amount;
+            }
+        } catch (ClassNotFoundException e) {
+            // Handle or log the exception
+            e.printStackTrace();
         }
-    }
 
-    public static void main(String[] args) {
-        TransactionManager transactionManager = new TransactionManager();
-
-        // Create instances of different account types
-        SavingsAccount savingsAccount = new SavingsAccount( "122",1200.0);
-        CheckingAccount checkingAccount = new CheckingAccount("5678",1000.0,500.0);
-        // Add accounts to the manager
-        transactionManager.addAccount(savingsAccount);
-        transactionManager.addAccount(checkingAccount);
-        transactionManager.performTransactions();
-        transactionManager.displayAllTransactionHistories();
-        //transfert transaction
-    }
 }
+    public static void main(String[]args){
+        SavingsAccount savingsAccount = new SavingsAccount("kiehii-99",40000.5);
+        CheckingAccount checkingAccount = new CheckingAccount("jjjj#89",200.00);
+        TransactionManager transactionManager = new TransactionManager();
+        transactionManager.addAcount(savingsAccount);
+        transactionManager.addAcount(checkingAccount);
+        transactionManager.displayInfoHistory();
+        transactionManager.transfert(savingsAccount,checkingAccount,20000.5);
+        transactionManager.displayInfo(savingsAccount);
+        transactionManager.displayInfo(checkingAccount);
+    }
 
+
+}

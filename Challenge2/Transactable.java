@@ -1,7 +1,6 @@
-package Day7.Challenge2;
+package Day7.challenge2;
 
 public interface Transactable {
-        void deposit(double amount);
-        void withdrow(double amount);
-
+    public void deposit(double amount) throws Exception;
+    public void withdraw(double amount);
 }
