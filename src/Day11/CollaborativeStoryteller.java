@@ -68,9 +68,8 @@ public class CollaborativeStoryteller {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Story story = loadStoryTrack();
-
+        System.out.println(story.toString());
         System.out.println("Welcome to the Collaborative Storyteller!");
-        //int order = story.getSentences().size() + 1;
 
         while (true) {
             System.out.print("\nEnter your name (Auter): ");
@@ -87,7 +86,7 @@ public class CollaborativeStoryteller {
                 saveStoryTrack(story);
                 System.out.println("Story saved succesfully!!!!.");
             } else {
-                System.out.println("Story not saved.");
+                System.out.println("Story not saved,Try again.");
             }
 
             System.out.print("Do you want to add another sentence? (yes/no): ");
